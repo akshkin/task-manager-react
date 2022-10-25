@@ -2,7 +2,7 @@
   "name": "task-manager-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://vivacious-squid.cyclic.app",
   "dependencies": {
     "@mui/icons-material": "^5.10.9",
     "@testing-library/jest-dom": "^5.16.5",
