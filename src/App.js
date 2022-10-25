@@ -1,25 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from "react-router-dom"
+import Auth from './routes/auth/auth.component';
+import Navbar from './components/navbar/navbar.component';
+import Home from './routes/home/home.component';
+import Dashboard from './routes/dashboard/dashboard.component';
+import Profile from "./routes/profile/profile.component";
+import PrivateRoute from "./routes/privateRoute";
+import { useSelector } from "react-redux";
 
 function App() {
+  const user = useSelector(state => state.user.currentUser)
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar user={user}/>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth user={user}/>} />
+        <Route path="/dashboard" element={<PrivateRoute user={user}><Dashboard user={user}/></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute user={user}> <Profile user={user} /></PrivateRoute>} />
+      </Routes>     
     </div>
-  );
+  )
 }
 
 export default App;
