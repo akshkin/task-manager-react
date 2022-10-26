@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/auth"
+  from = "/users/signin"
   to = "https://vivacious-squid.cyclic.app/users/signin"
   status = 200
   force = true
