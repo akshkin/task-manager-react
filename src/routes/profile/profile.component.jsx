@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 
-function Profile( { user }) {
+function Profile() {
   const  profile = useSelector(state => state.user.currentUser)
   const [formFields, setFormFields] = useState({
     name: "",

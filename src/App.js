@@ -18,7 +18,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/auth" element={<Auth user={user}/>} />
         <Route path="/dashboard" element={<PrivateRoute user={user}><Dashboard user={user}/></PrivateRoute>} />
-        <Route path="/profile" element={<PrivateRoute user={user}> <Profile user={user} /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute user={user}> <Profile /></PrivateRoute>} />
       </Routes>     
     </div>
   )
