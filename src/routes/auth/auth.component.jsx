@@ -18,9 +18,7 @@ function Auth({ user }) {
   const dispatch = useDispatch()
   const error = useSelector(state => state.error)
   const navigate = useNavigate()
-  //const  currentUser  = useSelector(state => state.user.currentUser)
-  
-  console.log(error[0]?.message)
+   
   
   const handleSubmit = (event) => {
     event.preventDefault()

@@ -1,4 +1,3 @@
-import { getStaticContextFromError } from "@remix-run/router"
 import ERROR_ACTION_TYPES from "./error.types"
 
 const { SET_ERROR, REMOVE_ERROR } = ERROR_ACTION_TYPES

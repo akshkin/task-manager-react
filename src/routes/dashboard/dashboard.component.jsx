@@ -77,6 +77,7 @@ function Dashboard({ user }) {
 
   const filteredTasks = tasks.filter(task => task.description.toLowerCase().includes(searchTerm.toLowerCase()))
   
+  
 
   if(!user) {
     return (
