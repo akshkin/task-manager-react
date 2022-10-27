@@ -4,7 +4,12 @@ import thunk from "redux-thunk"
 import { rootReducer } from "./root-reducer"
 
 
-const middleWares = [logger, thunk]
+let middleWares
+
+if(process.env.NODE_ENV === 'production'){
+  middleWares = [thunk]
+}
+middleWares = [logger, thunk]
 
 const composedEnhancers = compose(applyMiddleware(...middleWares))
 
