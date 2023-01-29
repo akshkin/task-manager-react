@@ -13,6 +13,6 @@
 
 ## Built using
 - React
-- CSS3
+- Styled Components
 - Mobile-first workflow
 - Redux
