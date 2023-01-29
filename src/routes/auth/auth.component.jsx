@@ -7,9 +7,9 @@ import Button from '../../components/button/button.component'
 import Error from '../../components/error/error.component'
 
 const defaultFormFields = {
-  name: '',
-  email: '',
-  password: ''
+  name: 'Jane Smith',
+  email: 'jane@gmail.com',
+  password: '1234567'
 }
 
 function Auth({ user }) {

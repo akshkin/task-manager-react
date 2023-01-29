@@ -1,30 +1,32 @@
-import axios from "axios"
+import axios from "axios";
 
-const API = axios.create({baseUrl: "https://vivacious-squid.cyclic.app"})
+const API = axios.create({ baseURL: "https://vivacious-squid.cyclic.app" });
 
-API.interceptors.request.use(req => {
-  if(localStorage.getItem("user")){
-    req.headers.authorization = JSON.parse(localStorage.getItem("user")).token
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem("user")) {
+    req.headers.authorization = JSON.parse(localStorage.getItem("user")).token;
   }
-  return req
-})
+  return req;
+});
 
-export const fetchTasks = () => API.get(`/tasks`)
+export const fetchTasks = () => API.get(`/tasks`);
 
-export const createTask = newTask => API.post(`/tasks`, newTask)
+export const createTask = (newTask) => API.post(`/tasks`, newTask);
 
-export const updateTask = (id, updatedPost) => API.patch(`/tasks/${id}`, updatedPost)
+export const updateTask = (id, updatedPost) =>
+  API.patch(`/tasks/${id}`, updatedPost);
 
-export const deleteTask = id => API.delete(`/tasks/${id}`)
+export const deleteTask = (id) => API.delete(`/tasks/${id}`);
 
-export const signIn = formFields => API.post(`/users/signin`, formFields)
+export const signIn = (formFields) => API.post(`/users/signin`, formFields);
 
-export const signUp = formFields => API.post(`/users/signup`, formFields)
+export const signUp = (formFields) => API.post(`/users/signup`, formFields);
 
-export const signOut = () => API.post("/users/signout")
+export const signOut = () => API.post("/users/signout");
 
-export const getProfile = () => API.get("/users/profile")
+export const getProfile = () => API.get("/users/profile");
 
-export const updateProfile = (updatedProfile) => API.patch("/users/profile", updatedProfile)
+export const updateProfile = (updatedProfile) =>
+  API.patch("/users/profile", updatedProfile);
 
-export const deleteProfile = () => API.delete("/users/profile")
+export const deleteProfile = () => API.delete("/users/profile");

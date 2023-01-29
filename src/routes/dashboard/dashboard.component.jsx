@@ -26,7 +26,7 @@ function Dashboard({ user }) {
   const dispatch = useDispatch()
   const task = useSelector(state => state.tasks.tasks.find(task => task._id === currentId))
   const [searchTerm, setSearchTerm] = useState('')
- 
+  
   useEffect(()=>{
     dispatch(getTasks())
   }, [currentId, user, dispatch])
@@ -90,7 +90,7 @@ function Dashboard({ user }) {
   return  (
     <Container>  
       <div>
-        <h2>Hello, {user?.user.name}!</h2>
+        <h2>Hello, {user?.name || user?.user?.name}!</h2>
       </div>  
       <SearchForm>
         <SearchIcon className='icon'/>
