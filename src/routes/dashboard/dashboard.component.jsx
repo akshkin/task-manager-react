@@ -1,144 +1,171 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import Task from '../../components/task/task.component'
+import Task from "../../components/task/task.component";
 
-import { Container, Dialog, TasksContainer, SearchInput, SearchForm } from "./dashboard.styles"
-import { createTask, getTasks, updateTask } from '../../store/task/task.action';
+import {
+  Container,
+  Dialog,
+  TasksContainer,
+  SearchInput,
+  SearchForm,
+} from "./dashboard.styles";
+import { createTask, getTasks, updateTask } from "../../store/task/task.action";
 
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import Button from '../../components/button/button.component';
-import FadeLoader from "react-spinners/FadeLoader"
-import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from '@mui/icons-material/Search';
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import Button from "../../components/button/button.component";
+import FadeLoader from "react-spinners/FadeLoader";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 
-function Dashboard({ user }) {
-  const [currentId, setCurrentId] = useState(null)
-  const  {tasks, isLoading}  = useSelector(state => state.tasks)
+function Dashboard() {
+  const user = useSelector(
+    (state) => state.user?.currentUser?.user || state.user?.currentUser
+  );
+  const [currentId, setCurrentId] = useState(null);
+  const { tasks, isLoading } = useSelector((state) => state.tasks);
   const [taskFields, setTaskFields] = useState({
     description: "",
-    completed: false
-  })
-  const [isOpen, setIsOpen] = useState(false)
-  const ref = useRef(null)
-  const dispatch = useDispatch()
-  const task = useSelector(state => state.tasks.tasks.find(task => task._id === currentId))
-  const [searchTerm, setSearchTerm] = useState('')
-  
-  useEffect(()=>{
-    dispatch(getTasks())
-  }, [currentId, user, dispatch])
-
+    completed: false,
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  const dispatch = useDispatch();
+  const task = useSelector((state) =>
+    state.tasks.tasks.find((task) => task._id === currentId)
+  );
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    if(task) setTaskFields(task)
-  }, [task])
+    dispatch(getTasks());
+  }, [currentId, user, dispatch]);
+
+  useEffect(() => {
+    if (task) setTaskFields(task);
+  }, [task]);
 
   const clear = () => {
-    setTaskFields({description: "", completed: false})
-    setIsOpen(false)
-    setCurrentId(null)
-  }
+    setTaskFields({ description: "", completed: false });
+    setIsOpen(false);
+    setCurrentId(null);
+  };
 
   useEffect(() => {
-    if(isOpen){
-      ref.current?.showModal()      
+    if (isOpen) {
+      ref.current?.showModal();
     } else {
-      ref.current?.close()
+      ref.current?.close();
     }
-  },[isOpen])
+  }, [isOpen]);
 
-  const handleChange = event => {
-    const { name, value, type, checked } = event.target
-    setTaskFields({...taskFields, [name]: type === "checkbox" ? checked : value})
-    if(checked) setTaskFields({...taskFields, completed: true}) 
-  }
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    setTaskFields({
+      ...taskFields,
+      [name]: type === "checkbox" ? checked : value,
+    });
+    if (checked) setTaskFields({ ...taskFields, completed: true });
+  };
 
-  const handleSearchChange = event => {
-    event.preventDefault()
-    setSearchTerm(event.target.value)    
-  }
-    
-  const handleSubmit = event => {
-    event.preventDefault()
-    if(currentId){
-      dispatch(updateTask(currentId, taskFields))
-    }else{
-      dispatch(createTask(taskFields))
+  const handleSearchChange = (event) => {
+    event.preventDefault();
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (currentId) {
+      dispatch(updateTask(currentId, taskFields));
+    } else {
+      dispatch(createTask(taskFields));
     }
-    clear()
-  }
+    clear();
+  };
 
   const openModal = () => {
-    setIsOpen(true)
-  }
+    setIsOpen(true);
+  };
 
-  const filteredTasks = tasks.filter(task => task.description.toLowerCase().includes(searchTerm.toLowerCase()))
-  
-  
+  const filteredTasks = tasks.filter((task) =>
+    task.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  if(!user) {
+  if (!user) {
     return (
       <>
-      <h2>Please sign in to see tasks</h2>
+        <h2>Please sign in to see tasks</h2>
       </>
-    )
+    );
   }
 
-  return  (
-    <Container>  
+  return (
+    <Container>
       <div>
         <h2>Hello, {user?.name || user?.user?.name}!</h2>
-      </div>  
+      </div>
       <SearchForm>
-        <SearchIcon className='icon'/>
-        <SearchInput 
+        <SearchIcon className="icon" />
+        <SearchInput
           type="search"
           onChange={handleSearchChange}
           placeholder="Search tasks"
         />
-      </SearchForm>  
-      {isLoading && <FadeLoader color="#36d7b7"/> }
+      </SearchForm>
+      {isLoading && <FadeLoader color="#36d7b7" />}
       <>
-        {isOpen && 
-        <Dialog ref={ref}>
+        {isOpen && (
+          <Dialog ref={ref}>
             <form onSubmit={handleSubmit}>
-              <CloseIcon className='close-icon icon' onClick={() => setIsOpen(false)}/>
-              <input 
+              <CloseIcon
+                className="close-icon icon"
+                onClick={() => setIsOpen(false)}
+              />
+              <input
                 type="text"
                 name="description"
                 placeholder="Description"
                 value={taskFields.description}
                 onChange={handleChange}
               />
-              <input 
+              <input
                 type="checkbox"
                 name="completed"
                 onChange={handleChange}
                 checked={taskFields.completed}
               />
-              { taskFields.completed ? <CheckBoxIcon className="icon" /> :  <CheckBoxOutlineBlankIcon className="icon" /> }
+              {taskFields.completed ? (
+                <CheckBoxIcon className="icon" />
+              ) : (
+                <CheckBoxOutlineBlankIcon className="icon" />
+              )}
               <Button>Done</Button>
             </form>
-          </Dialog> 
-        }  
-      
-        <div className="row" >
+          </Dialog>
+        )}
+
+        <div className="row">
           <h3>Add task </h3>
-          <AddCircleIcon className="icon" onClick={openModal}/>
+          <AddCircleIcon className="icon" onClick={openModal} />
         </div>
         <TasksContainer>
-          {          
-            filteredTasks.map(task => <Task key={task._id} handleChange={handleChange} setTaskFields={setTaskFields} taskFields={taskFields} openModal={openModal} currentId={currentId} task={task} setCurrentId={setCurrentId}/>
-            )
-          }
+          {filteredTasks.map((task) => (
+            <Task
+              key={task._id}
+              handleChange={handleChange}
+              setTaskFields={setTaskFields}
+              taskFields={taskFields}
+              openModal={openModal}
+              currentId={currentId}
+              task={task}
+              setCurrentId={setCurrentId}
+            />
+          ))}
         </TasksContainer>
       </>
     </Container>
-    )
-  
+  );
 }
 
-export default Dashboard
+export default Dashboard;

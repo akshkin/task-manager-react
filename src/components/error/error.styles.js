@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const StyledError = styled.div`
   background: pink;
@@ -6,10 +6,11 @@ export const StyledError = styled.div`
   padding: 0.5em;
   font-size: 0.75rem;
   display: flex;
-  align-items:center;
+  align-items: center;
+  margin: 1em;
 
-  .error-icon{
+  .error-icon {
     color: red;
     margin-right: 1em;
   }
-`
+`;
