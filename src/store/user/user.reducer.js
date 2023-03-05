@@ -8,17 +8,20 @@ const {
   UPDATE_PROFILE,
   DELETE_PROFILE,
   UPLOAD_AVATAR,
+  START_AUTH,
 } = USER_ACTION_TYPES;
 
 const USER_INITIAL_STATE = {
   currentUser: JSON.parse(localStorage.getItem("user")) || null,
-  isloading: true,
+  isLoading: false,
   isAuthenticated: false,
 };
 
 export const userReducer = (state = USER_INITIAL_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
+    case START_AUTH:
+      return { ...state, isLoading: true };
     case AUTH:
       localStorage.setItem("user", JSON.stringify(payload));
       return {

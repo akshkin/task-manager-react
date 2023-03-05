@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signIn, signUp } from "../../store/user/user.action";
 import Button from "../../components/button/button.component";
 import Error from "../../components/error/error.component";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const defaultFormFields = {
   name: "",
@@ -22,17 +23,16 @@ function Auth() {
   const user = useSelector(
     (state) => state.user?.currentUser?.user || state.user?.currentUser
   );
+  const isLoading = useSelector((state) => state.user?.isLoading);
 
   const from = location.state?.from || "/dashboard";
   const message = location.state?.message;
 
-  // useEffect(() => {
   if (user) {
     setTimeout(() => {
       navigate(from, { replace: true });
     }, 1000);
   }
-  // }, [user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -105,6 +105,7 @@ function Auth() {
         </button>
         {error.length > 0 && <Error>{error[0]?.message}</Error>}
       </form>
+      {isLoading ? <FadeLoader /> : ""}
     </Container>
   );
 }

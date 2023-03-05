@@ -20,11 +20,11 @@ function Navbar() {
 
   const logout = () => {
     dispatch(signOut());
-    // setTimeout(() => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
-    window.location.reload();
-    // }, 500);
+    setTimeout(() => {
+      dispatch({ type: "LOGOUT" });
+      navigate("/");
+      window.location.reload();
+    }, 300);
   };
 
   const toggleDropwdown = () => {
@@ -39,31 +39,16 @@ function Navbar() {
       <Column>
         {currentUser && (
           <>
-            {currentUser?.avatar ? (
-              <img
-                src={currentUser?.avatar}
-                alt="avatar"
-                onClick={toggleDropwdown}
-              />
+            <Avatar>{currentUser?.name?.charAt(0).toUpperCase()}</Avatar>
+            {!dropdown ? (
+              <ArrowDropDownIcon className="arrow" onClick={toggleDropwdown} />
             ) : (
-              <>
-                <Avatar>{currentUser?.name?.charAt(0).toUpperCase()}</Avatar>
-                {!dropdown ? (
-                  <ArrowDropDownIcon
-                    className="arrow"
-                    onClick={toggleDropwdown}
-                  />
-                ) : (
-                  <ArrowDropUpIcon
-                    className="arrow"
-                    onClick={toggleDropwdown}
-                  />
-                )}
-              </>
+              <ArrowDropUpIcon className="arrow" onClick={toggleDropwdown} />
             )}
             <Link to="/dashboard">Dashboard</Link>
           </>
         )}
+
         {!currentUser && (
           <Button>
             <Link to="/auth">Sign In</Link>

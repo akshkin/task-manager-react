@@ -37,6 +37,7 @@ export const Avatar = styled.div`
   place-items: center;
   font-size: 1rem;
   cursor: pointer;
+  margin-right: -0.8em;
 `;
 
 export const Dropdown = styled.div`
